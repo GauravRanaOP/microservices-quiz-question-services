@@ -1,138 +1,167 @@
-Microservices Quiz & Question System
+# Microservices Quiz & Question System
 
-A Spring Boot Microservices project that demonstrates service discovery, API gateway routing, and inter-service communication using OpenFeign.
+A **Spring Boot Microservices project** that demonstrates service discovery, API gateway routing, load balancing, and inter-service communication using **OpenFeign**.
 
-The application consists of two main services:
+The system contains two main services:
 
-Quiz Service
+- **Quiz Service**
+- **Question Service**
 
-Question Service
+The **Quiz Service communicates with the Question Service via Feign Client** to retrieve questions for a particular quiz.
 
-The Quiz Service communicates with the Question Service via Feign Client to retrieve questions for a particular quiz.
+---
 
-Architecture Overview
-Microservices Components
-API Gateway
+## Architecture Overview
 
-Single entry point for client requests
+```mermaid
+flowchart LR
 
-Routes requests to appropriate services
+Client --> API_Gateway
 
-Reduces direct communication between client and services
+API_Gateway --> Quiz_Service
+API_Gateway --> Question_Service
 
-Service Registry (Eureka Server)
+Quiz_Service -->|Feign Client| Question_Service
 
-Handles service discovery
+Quiz_Service --> MySQL
+Question_Service --> MySQL
 
-Services register themselves with Eureka
+Quiz_Service --> Eureka
+Question_Service --> Eureka
+API_Gateway --> Eureka
+```
 
-Enables dynamic service lookup
+## Microservices Components
 
-Quiz Service
+### API Gateway
+- Single entry point for client requests
+- Routes requests to appropriate services
+- Reduces direct communication between client and services
 
-Manages quiz related operations
+### Service Registry (Eureka Server)
+- Handles **service discovery**
+- Services register themselves with Eureka
+- Enables **dynamic service lookup**
 
-Communicates with Question Service using Feign Client
+### Quiz Service
+- Manages quiz related operations
+- Communicates with Question Service using **Feign Client**
+- Supports **multiple instances for load balancing**
 
-Supports multiple instances for load balancing
+### Question Service
+- Manages question related operations
+- Stores and retrieves question data
 
-Question Service
+---
 
-Manages question related operations
+## Tech Stack
 
-Stores and retrieves question data
+| Technology | Purpose |
+|-----------|--------|
+| Java | Core programming language |
+| Spring Boot | Microservice framework |
+| Spring Cloud | Distributed system tools |
+| Eureka Server | Service discovery |
+| OpenFeign | Inter-service communication |
+| Spring Cloud Gateway | API Gateway |
+| MySQL | Database |
+| Maven | Build tool |
 
-Tech Stack
-Technology	Purpose
-Java	Core programming language
-Spring Boot	Microservice framework
-Spring Cloud	Distributed system tools
-Eureka Server	Service discovery
-OpenFeign	Inter-service communication
-Spring Cloud Gateway	API Gateway
-MySQL	Database
-Maven	Build tool
-Load Balancing
+---
 
-Multiple Quiz Service instances can run simultaneously.
+## Load Balancing
+
+Multiple **Quiz Service instances** can run simultaneously.
 
 If one instance fails or becomes overloaded:
 
-Another instance automatically handles the request
-
-Requests are distributed using client-side load balancing
+- Another instance automatically handles the request
+- Requests are distributed using **client-side load balancing**
 
 This improves:
 
-Availability
+- Availability
+- Fault tolerance
+- Scalability
 
-Fault tolerance
+---
 
-Scalability
+# Service Communication
 
-Project Structure
-microservices-quiz-question-services
-│
-├── service-registry
-│
-├── api-gateway
-│
-├── quiz-service
-│
-└── question-service
-Service Communication
-
-Quiz Service communicates with Question Service using Feign Client.
+Quiz Service communicates with Question Service using **Feign Client**.
 
 Example:
 
+
 Quiz Service → Feign Client → Question Service
 
-This enables clean and declarative REST calls between microservices.
 
-How to Run the Project
+This enables **clean and declarative REST calls between microservices**.
+
+---
+
+## How to Run the Project
 
 Start the services in the following order:
 
-1️⃣ Start Service Registry
+### 1️⃣ Start Service Registry
+
 service-registry
-2️⃣ Start API Gateway
+
+
+### 2️⃣ Start API Gateway
+
 api-gateway
-3️⃣ Start Question Service
+
+
+### 3️⃣ Start Question Service
+
 question-service
-4️⃣ Start Quiz Service
+
+
+### 4️⃣ Start Quiz Service
+
 quiz-service
-Example Request Flow
+
+
+---
+
+## Example Request Flow
+
+
 Client Request
-      ↓
+↓
 API Gateway
-      ↓
+↓
 Quiz Service
-      ↓
+↓
 Feign Client
-      ↓
+↓
 Question Service
-      ↓
+↓
 Database
-Key Concepts Demonstrated
 
-Microservices architecture
 
-API Gateway pattern
+---
 
-Service discovery with Eureka
+## Key Concepts Demonstrated
 
-Inter-service communication using Feign
+- Microservices architecture
+- API Gateway pattern
+- Service discovery with Eureka
+- Inter-service communication using Feign
+- Load balancing with multiple service instances
+- MySQL database integration
 
-Load balancing with multiple service instances
+---
 
-MySQL database integration
+## Repository
 
-Repository
-
-GitHub Repository
+GitHub Repository  
 https://github.com/GauravRanaOP/microservices-quiz-question-services
 
-Author
+---
 
-Gaurav Rana
+## Author
+
+**Gaurav Rana**
